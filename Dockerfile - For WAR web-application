@@ -1,0 +1,17 @@
+FROM tomcat:8.5.47-jdk11-openjdk
+
+#Transfer WAR-file
+
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY ./target/fleetman-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+
+EXPOSE 8080
+
+ENV JAVA_OPTS="-Dspring.profiles.active=docker-demo"
+CMD ["catalina.sh", "run"]
+
+ARG BUILD_DATE
+
+LABEL build-date = $BUILD_DATE
+LABEL maintainer = "patrick Steens / git.patje.stinch@gmail.com"
