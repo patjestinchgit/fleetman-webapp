@@ -131,7 +131,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
+			<version>8.0.30</version>
 		</dependency>
 	
 		<!-- Webjars brings in resources such as stylessheets and libraries like Jquery in as jars -->
@@ -159,7 +159,7 @@
 	      <groupId>org.webjars</groupId>
 	      <artifactId>jquery</artifactId>
 	      <version>3.5.1</version>
-	    </dependency>		
+	    </dependency>
 	    
 	</dependencies>
 	
@@ -181,17 +181,24 @@
 
 				<configuration>
 					<!--  If using Docker Toolbox (Windows), you must find the IP of your VM. docker-machine ip -->
-                    <dockerHost>http://192.168.99.100:2375</dockerHost> 
+                    <!-- <dockerHost>http://192.168.99.100:2375</dockerHost> -->
 
 					<!--  linux -->
                     <!--<dockerHost>http://127.0.0.1:2375</dockerHost>-->
                     <!--  this is for Mac -->
                     <!-- <dockerHost>unix:///var/run/docker.sock</dockerHost> -->
 
+					<!-- Needed if pushing to Docker-hub
+					<authConfig>
+						<username>USERNAME</username>
+						<password>password</password>
+					</authConfig>
+					-->
+
                     <verbose>true</verbose>
 					<images>
 						<image>
-							<name>virtualpairprogrammers/fleetman-webapp</name>
+							<name>fleetman-webapp</name>
 							<build>
 								<!--  TODO better to have this in a subdirectory -->
 								<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
@@ -208,6 +215,18 @@
 						</image>
 					</images>
 				</configuration>
+
+				<executions>
+					<execution>
+						<phase>
+							package
+						</phase>
+						<goals>
+							<goal>build</goal> <!-- The goal build is inheriting from the dependency docker-maven-plugin -->
+						</goals>
+					</execution>
+				</executions>
+
 			</plugin>
 			
 			

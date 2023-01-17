@@ -1,9 +1,16 @@
-FROM openjdk:8u131-jre
+FROM openjdk:8u131-jdk-alpine
 
-MAINTAINER Richard Chesterwood "contact@virtualpairprogrammers.com"
+WORKDIR /usr/local/bin/
 
-ADD maven/fleetman-0.0.1-SNAPSHOT.war webapp.war
+#Transfer JAR-file
+# COPY ./target/fleetman-0.0.1-SNAPSHOT.jar webapp.jar
+COPY maven/fleetman-0.0.1-SNAPSHOT.jar webapp.jar
 
 EXPOSE 8080
 
-CMD ["java","-Dspring.profiles.active=docker","-Djava.security.egd=file:/dev/./urandom","-jar","webapp.war"]
+CMD ["java", "-Dspring.profiles.active=docker-demo", "-jar", "webapp.jar"]
+
+ARG BUILD_DATE
+
+LABEL build-date = $BUILD_DATE
+LABEL maintainer = "patrick Steens / git.patje.stinch@gmail.com"
