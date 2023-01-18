@@ -3,7 +3,7 @@ version: "3"
 services:
 
    fleetman-webapp:
-      image: virtualpairprogrammers/fleetman-production
+      image: gitpatjestinch/fleetman-webapp
       networks:
          - fleetman-network
       ports:
